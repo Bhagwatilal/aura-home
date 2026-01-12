@@ -1,18 +1,22 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ShoppingBag, Heart, Search, User } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { useCart } from '@/context/CartContext';
+import { useWishlist } from '@/context/WishlistContext';
 
 const navLinks = [
-  { name: 'Collections', href: '#collections' },
-  { name: 'New Arrivals', href: '#new-arrivals' },
-  { name: 'Living', href: '#living' },
-  { name: 'Bedroom', href: '#bedroom' },
-  { name: 'Lighting', href: '#lighting' },
+  { name: 'Wall Decor', href: '#collections' },
+  { name: 'Plants', href: '#collections' },
+  { name: 'Lighting', href: '#collections' },
+  { name: 'Decor Accents', href: '#collections' },
 ];
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { totalItems } = useCart();
+  const { totalItems: wishlistItems } = useWishlist();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,13 +38,14 @@ const Navbar = () => {
       >
         <div className="container-luxury flex items-center justify-between">
           {/* Logo */}
-          <motion.a
-            href="/"
-            className="font-serif text-2xl md:text-3xl font-semibold text-foreground tracking-tight"
-            whileHover={{ scale: 1.02 }}
-          >
-            MAISON
-          </motion.a>
+          <Link to="/">
+            <motion.span
+              className="font-serif text-xl md:text-2xl font-semibold text-foreground tracking-tight"
+              whileHover={{ scale: 1.02 }}
+            >
+              Bhagwati Décor Hub
+            </motion.span>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-8">
@@ -57,37 +62,52 @@ const Navbar = () => {
 
           {/* Right Icons */}
           <div className="flex items-center gap-4">
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              className="p-2 text-foreground/80 hover:text-foreground transition-colors"
-            >
-              <Search className="w-5 h-5" />
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              className="hidden md:block p-2 text-foreground/80 hover:text-foreground transition-colors"
-            >
-              <User className="w-5 h-5" />
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              className="hidden md:block p-2 text-foreground/80 hover:text-foreground transition-colors"
-            >
-              <Heart className="w-5 h-5" />
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              className="relative p-2 text-foreground/80 hover:text-foreground transition-colors"
-            >
-              <ShoppingBag className="w-5 h-5" />
-              <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-accent text-accent-foreground text-[10px] font-medium rounded-full flex items-center justify-center">
-                2
-              </span>
-            </motion.button>
+            <Link to="/search">
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                className="p-2 text-foreground/80 hover:text-foreground transition-colors"
+              >
+                <Search className="w-5 h-5" />
+              </motion.button>
+            </Link>
+            <Link to="/account">
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                className="hidden md:block p-2 text-foreground/80 hover:text-foreground transition-colors"
+              >
+                <User className="w-5 h-5" />
+              </motion.button>
+            </Link>
+            <Link to="/wishlist">
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                className="relative hidden md:block p-2 text-foreground/80 hover:text-foreground transition-colors"
+              >
+                <Heart className="w-5 h-5" />
+                {wishlistItems > 0 && (
+                  <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-accent text-accent-foreground text-[10px] font-medium rounded-full flex items-center justify-center">
+                    {wishlistItems}
+                  </span>
+                )}
+              </motion.button>
+            </Link>
+            <Link to="/cart">
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                className="relative p-2 text-foreground/80 hover:text-foreground transition-colors"
+              >
+                <ShoppingBag className="w-5 h-5" />
+                {totalItems > 0 && (
+                  <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-accent text-accent-foreground text-[10px] font-medium rounded-full flex items-center justify-center">
+                    {totalItems}
+                  </span>
+                )}
+              </motion.button>
+            </Link>
 
             {/* Mobile Menu Button */}
             <motion.button
