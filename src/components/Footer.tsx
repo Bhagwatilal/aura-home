@@ -45,10 +45,10 @@ const Footer = () => {
           <div className="col-span-2">
             <motion.a
               href="/"
-              className="font-serif text-3xl font-semibold mb-6 block"
+              className="font-serif text-2xl font-semibold mb-6 block"
               whileHover={{ scale: 1.02 }}
             >
-              MAISON
+              Bhagwati Décor Hub
             </motion.a>
             <p className="text-primary-foreground/70 mb-6 max-w-xs">
               Curating exceptional home décor pieces that transform spaces into
@@ -147,7 +147,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-primary-foreground/10 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-primary-foreground/50">
-            © {new Date().getFullYear()} MAISON. All rights reserved.
+            © {new Date().getFullYear()} Bhagwati Décor Hub. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
             <span className="text-sm text-primary-foreground/50">

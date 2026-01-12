@@ -1,29 +1,37 @@
 import { motion } from 'framer-motion';
 import { Heart, ShoppingBag } from 'lucide-react';
 import { useState } from 'react';
+import { Product } from '@/data/products';
+import { useCart } from '@/context/CartContext';
+import { useWishlist } from '@/context/WishlistContext';
 
 interface ProductCardProps {
-  id: number;
-  name: string;
-  price: number;
+  product?: Product;
+  id?: string | number;
+  name?: string;
+  price?: number;
   originalPrice?: number;
-  image: string;
-  category: string;
+  image?: string;
+  category?: string;
   isNew?: boolean;
   isSale?: boolean;
 }
 
-const ProductCard = ({
-  name,
-  price,
-  originalPrice,
-  image,
-  category,
-  isNew,
-  isSale,
-}: ProductCardProps) => {
-  const [isWishlisted, setIsWishlisted] = useState(false);
+const ProductCard = (props: ProductCardProps) => {
+  const product = props.product;
+  const name = product?.name ?? props.name ?? '';
+  const price = product?.price ?? props.price ?? 0;
+  const originalPrice = product?.originalPrice ?? props.originalPrice;
+  const image = product?.image ?? props.image ?? '';
+  const category = product?.category ?? props.category ?? '';
+  const isNew = product?.isNew ?? props.isNew;
+  const isSale = product?.isSale ?? props.isSale;
+  const productId = product?.id ?? String(props.id);
+  
+  const { addToCart } = useCart();
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
   const [isHovered, setIsHovered] = useState(false);
+  const isWishlisted = isInWishlist(productId);
 
   return (
     <motion.div
@@ -65,7 +73,9 @@ const ProductCard = ({
           animate={{ opacity: isHovered ? 1 : 0 }}
           onClick={(e) => {
             e.stopPropagation();
-            setIsWishlisted(!isWishlisted);
+            if (product) {
+              isWishlisted ? removeFromWishlist(productId) : addToWishlist(product);
+            }
           }}
           className="absolute top-4 right-4 p-3 glass-card"
         >
@@ -88,6 +98,10 @@ const ProductCard = ({
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
+            onClick={(e) => {
+              e.stopPropagation();
+              if (product) addToCart(product);
+            }}
             className="w-full py-4 glass-card flex items-center justify-center gap-2 font-medium text-sm hover:bg-foreground hover:text-background transition-colors"
           >
             <ShoppingBag className="w-4 h-4" />
@@ -104,11 +118,11 @@ const ProductCard = ({
         </h3>
         <div className="flex items-center gap-3">
           <span className="font-medium text-foreground">
-            ${price.toLocaleString()}
+            ₹{price.toLocaleString()}
           </span>
           {originalPrice && (
             <span className="text-muted-foreground line-through text-sm">
-              ${originalPrice.toLocaleString()}
+              ₹{originalPrice.toLocaleString()}
             </span>
           )}
         </div>
