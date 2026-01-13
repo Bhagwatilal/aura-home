@@ -1,7 +1,8 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import heroImage from '@/assets/hero-living-room.jpg';
+import heroImage from '@/assets/hero-home-decor.jpg';
 
 const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -71,21 +72,25 @@ const Hero = () => {
             transition={{ duration: 0.6, delay: 0.7 }}
             className="flex flex-col sm:flex-row gap-4"
           >
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="btn-accent group"
-            >
-              Explore Collection
-              <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="btn-luxury-outline"
-            >
-              View Lookbook
-            </motion.button>
+            <Link to="/category/wall-decor">
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="btn-accent group"
+              >
+                Explore Collection
+                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </motion.button>
+            </Link>
+            <Link to="/search">
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="btn-luxury-outline"
+              >
+                Browse All Products
+              </motion.button>
+            </Link>
           </motion.div>
         </div>
       </motion.div>
