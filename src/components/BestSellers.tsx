@@ -1,50 +1,15 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
+import { Link } from 'react-router-dom';
 import ProductCard from './ProductCard';
-
-import productCeramicBowl from '@/assets/product-ceramic-bowl.jpg';
-import productPendantLamp from '@/assets/product-pendant-lamp.jpg';
-import productArmchair from '@/assets/product-armchair.jpg';
-import productWovenBasket from '@/assets/product-woven-basket.jpg';
-
-const products = [
-  {
-    id: 1,
-    name: 'Artisan Ceramic Bowl',
-    price: 89,
-    image: productCeramicBowl,
-    category: 'Ceramics',
-    isNew: true,
-  },
-  {
-    id: 2,
-    name: 'Brass Pendant Lamp',
-    price: 349,
-    originalPrice: 420,
-    image: productPendantLamp,
-    category: 'Lighting',
-    isSale: true,
-  },
-  {
-    id: 3,
-    name: 'Velvet Accent Chair',
-    price: 1299,
-    image: productArmchair,
-    category: 'Furniture',
-    isNew: true,
-  },
-  {
-    id: 4,
-    name: 'Handwoven Storage Basket',
-    price: 145,
-    image: productWovenBasket,
-    category: 'Accessories',
-  },
-];
+import { products } from '@/data/products';
 
 const BestSellers = () => {
   const headerRef = useRef(null);
   const isHeaderInView = useInView(headerRef, { once: true });
+
+  // Get featured products from different categories
+  const featuredProducts = products.slice(0, 8);
 
   return (
     <section id="new-arrivals" className="section-padding bg-secondary/30">
@@ -64,19 +29,30 @@ const BestSellers = () => {
               Best Sellers
             </h2>
           </div>
-          <motion.a
-            href="#"
-            whileHover={{ x: 5 }}
-            className="text-foreground font-medium link-underline inline-flex items-center gap-2"
-          >
-            View All Products
-            <span className="text-accent">→</span>
-          </motion.a>
+          <Link to="/search">
+            <motion.span
+              whileHover={{ x: 5 }}
+              className="text-foreground font-medium link-underline inline-flex items-center gap-2"
+            >
+              View All Products
+              <span className="text-accent">→</span>
+            </motion.span>
+          </Link>
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {products.map((product) => (
-            <ProductCard key={product.id} {...product} />
+          {featuredProducts.map((product) => (
+            <ProductCard
+              key={product.id}
+              id={product.id}
+              name={product.name}
+              price={product.price}
+              originalPrice={product.originalPrice}
+              image={product.image}
+              category={product.category}
+              isNew={product.isNew}
+              isSale={product.isSale}
+            />
           ))}
         </div>
       </div>

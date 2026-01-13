@@ -1,44 +1,57 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
 
-import collectionVases from '@/assets/collection-vases.jpg';
-import collectionFurniture from '@/assets/collection-furniture.jpg';
-import collectionLighting from '@/assets/collection-lighting.jpg';
-import collectionTextiles from '@/assets/collection-textiles.jpg';
+import categoryWallDecor from '@/assets/category-wall-decor.jpg';
+import categoryPlants from '@/assets/category-plants.jpg';
+import categoryLighting from '@/assets/category-lighting.jpg';
+import categoryDecorAccents from '@/assets/category-decor-accents.jpg';
 
 const collections = [
   {
-    title: 'Ceramics & Vases',
-    description: 'Handcrafted artisan pieces',
-    image: collectionVases,
+    title: 'Wall Decor',
+    description: 'Art, mirrors & tapestries',
+    image: categoryWallDecor,
     items: 48,
+    slug: 'wall-decor',
   },
   {
-    title: 'Furniture',
-    description: 'Statement pieces for every room',
-    image: collectionFurniture,
-    items: 72,
-  },
-  {
-    title: 'Lighting',
-    description: 'Illuminate with elegance',
-    image: collectionLighting,
+    title: 'Plants & Greenery',
+    description: 'Bring nature indoors',
+    image: categoryPlants,
     items: 36,
+    slug: 'plants-greenery',
   },
   {
-    title: 'Textiles',
-    description: 'Comfort meets luxury',
-    image: collectionTextiles,
+    title: 'Lighting & Ambience',
+    description: 'Illuminate with elegance',
+    image: categoryLighting,
+    items: 42,
+    slug: 'lighting-ambience',
+  },
+  {
+    title: 'Decor Accents',
+    description: 'Finishing touches for every room',
+    image: categoryDecorAccents,
     items: 54,
+    slug: 'decor-accents',
   },
 ];
+
+interface CollectionType {
+  title: string;
+  description: string;
+  image: string;
+  items: number;
+  slug: string;
+}
 
 const CollectionCard = ({
   collection,
   index,
 }: {
-  collection: (typeof collections)[0];
+  collection: CollectionType;
   index: number;
 }) => {
   const ref = useRef(null);
@@ -78,13 +91,15 @@ const CollectionCard = ({
           <p className="text-primary-foreground/80 text-sm mb-4">
             {collection.description}
           </p>
-          <motion.button
-            whileHover={{ x: 5 }}
-            className="inline-flex items-center gap-2 text-primary-foreground font-medium text-sm group/btn"
-          >
-            Explore
-            <ArrowUpRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
-          </motion.button>
+          <Link to={`/category/${collection.slug}`}>
+            <motion.button
+              whileHover={{ x: 5 }}
+              className="inline-flex items-center gap-2 text-primary-foreground font-medium text-sm group/btn"
+            >
+              Explore
+              <ArrowUpRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+            </motion.button>
+          </Link>
         </motion.div>
       </div>
     </motion.div>

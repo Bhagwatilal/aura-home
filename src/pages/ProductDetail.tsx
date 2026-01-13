@@ -13,8 +13,8 @@ import { useToast } from '@/hooks/use-toast';
 const ProductDetail = () => {
   const { id } = useParams();
   const [quantity, setQuantity] = useState(1);
-  const { addItem } = useCart();
-  const { addItem: addToWishlist, isInWishlist, removeItem: removeFromWishlist } = useWishlist();
+  const { addToCart } = useCart();
+  const { addToWishlist, isInWishlist, removeFromWishlist } = useWishlist();
   const { toast } = useToast();
 
   const product = products.find((p) => p.id === id);
@@ -40,13 +40,7 @@ const ProductDetail = () => {
 
   const handleAddToCart = () => {
     for (let i = 0; i < quantity; i++) {
-      addItem({
-        id: product.id,
-        name: product.name,
-        price: product.price,
-        image: product.image,
-        quantity: 1,
-      });
+      addToCart(product);
     }
     toast({
       title: 'Added to Cart',
@@ -62,12 +56,7 @@ const ProductDetail = () => {
         description: `${product.name} removed from your wishlist`,
       });
     } else {
-      addToWishlist({
-        id: product.id,
-        name: product.name,
-        price: product.price,
-        image: product.image,
-      });
+      addToWishlist(product);
       toast({
         title: 'Added to Wishlist',
         description: `${product.name} added to your wishlist`,

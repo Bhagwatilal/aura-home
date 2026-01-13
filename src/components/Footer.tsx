@@ -1,31 +1,29 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { Instagram, Facebook, Twitter, Linkedin } from 'lucide-react';
 
 const footerLinks = {
   shop: [
-    { name: 'New Arrivals', href: '#' },
-    { name: 'Best Sellers', href: '#' },
-    { name: 'Living Room', href: '#' },
-    { name: 'Bedroom', href: '#' },
-    { name: 'Lighting', href: '#' },
-    { name: 'Décor', href: '#' },
+    { name: 'Wall Decor', href: '/category/wall-decor' },
+    { name: 'Plants & Greenery', href: '/category/plants-greenery' },
+    { name: 'Lighting', href: '/category/lighting-ambience' },
+    { name: 'Decor Accents', href: '/category/decor-accents' },
+    { name: 'Soft Accessories', href: '/category/soft-accessories' },
+    { name: 'Functional Decor', href: '/category/functional-decor' },
   ],
   company: [
-    { name: 'About Us', href: '#' },
-    { name: 'Our Story', href: '#' },
-    { name: 'Careers', href: '#' },
-    { name: 'Press', href: '#' },
+    { name: 'About Us', href: '/about' },
+    { name: 'Contact Us', href: '/contact' },
   ],
   support: [
-    { name: 'Contact Us', href: '#' },
-    { name: 'FAQ', href: '#' },
-    { name: 'Shipping & Returns', href: '#' },
-    { name: 'Track Order', href: '#' },
+    { name: 'FAQ', href: '/faq' },
+    { name: 'Track Order', href: '/track-order' },
+    { name: 'Shipping Policy', href: '/shipping-policy' },
+    { name: 'Returns & Refunds', href: '/returns-policy' },
   ],
   legal: [
-    { name: 'Privacy Policy', href: '#' },
-    { name: 'Terms of Service', href: '#' },
-    { name: 'Cookie Policy', href: '#' },
+    { name: 'Privacy Policy', href: '/privacy-policy' },
+    { name: 'Terms of Service', href: '/terms-of-service' },
   ],
 };
 
@@ -43,13 +41,14 @@ const Footer = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-12 mb-16">
           {/* Brand */}
           <div className="col-span-2">
-            <motion.a
-              href="/"
-              className="font-serif text-2xl font-semibold mb-6 block"
-              whileHover={{ scale: 1.02 }}
-            >
-              Bhagwati Décor Hub
-            </motion.a>
+            <Link to="/">
+              <motion.span
+                className="font-serif text-2xl font-semibold mb-6 block"
+                whileHover={{ scale: 1.02 }}
+              >
+                Bhagwati Décor Hub
+              </motion.span>
+            </Link>
             <p className="text-primary-foreground/70 mb-6 max-w-xs">
               Curating exceptional home décor pieces that transform spaces into
               sanctuaries of elegance and comfort.
@@ -78,12 +77,12 @@ const Footer = () => {
             <ul className="space-y-3">
               {footerLinks.shop.map((link) => (
                 <li key={link.name}>
-                  <a
-                    href={link.href}
+                  <Link
+                    to={link.href}
                     className="text-primary-foreground/70 hover:text-primary-foreground transition-colors text-sm"
                   >
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -96,12 +95,12 @@ const Footer = () => {
             <ul className="space-y-3">
               {footerLinks.company.map((link) => (
                 <li key={link.name}>
-                  <a
-                    href={link.href}
+                  <Link
+                    to={link.href}
                     className="text-primary-foreground/70 hover:text-primary-foreground transition-colors text-sm"
                   >
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -114,12 +113,12 @@ const Footer = () => {
             <ul className="space-y-3">
               {footerLinks.support.map((link) => (
                 <li key={link.name}>
-                  <a
-                    href={link.href}
+                  <Link
+                    to={link.href}
                     className="text-primary-foreground/70 hover:text-primary-foreground transition-colors text-sm"
                   >
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -132,12 +131,12 @@ const Footer = () => {
             <ul className="space-y-3">
               {footerLinks.legal.map((link) => (
                 <li key={link.name}>
-                  <a
-                    href={link.href}
+                  <Link
+                    to={link.href}
                     className="text-primary-foreground/70 hover:text-primary-foreground transition-colors text-sm"
                   >
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -154,7 +153,7 @@ const Footer = () => {
               Secure Payment
             </span>
             <div className="flex gap-3">
-              {['Visa', 'MC', 'Amex', 'PayPal'].map((card) => (
+              {['Visa', 'MC', 'UPI', 'PayTM'].map((card) => (
                 <span
                   key={card}
                   className="px-2 py-1 text-[10px] border border-primary-foreground/20 rounded text-primary-foreground/70"

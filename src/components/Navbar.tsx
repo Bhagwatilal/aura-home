@@ -6,10 +6,10 @@ import { useCart } from '@/context/CartContext';
 import { useWishlist } from '@/context/WishlistContext';
 
 const navLinks = [
-  { name: 'Wall Decor', href: '#collections' },
-  { name: 'Plants', href: '#collections' },
-  { name: 'Lighting', href: '#collections' },
-  { name: 'Decor Accents', href: '#collections' },
+  { name: 'Wall Decor', href: '/category/wall-decor' },
+  { name: 'Plants', href: '/category/plants-greenery' },
+  { name: 'Lighting', href: '/category/lighting-ambience' },
+  { name: 'Decor Accents', href: '/category/decor-accents' },
 ];
 
 const Navbar = () => {
@@ -50,13 +50,13 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-8">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.name}
-                href={link.href}
+                to={link.href}
                 className="text-sm font-medium text-foreground/80 hover:text-foreground link-underline transition-colors duration-300"
               >
                 {link.name}
-              </a>
+              </Link>
             ))}
           </div>
 
@@ -148,27 +148,30 @@ const Navbar = () => {
 
               <div className="mt-16 flex flex-col gap-6">
                 {navLinks.map((link, index) => (
-                  <motion.a
+                  <Link
                     key={link.name}
-                    href={link.href}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
+                    to={link.href}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="text-xl font-serif text-foreground hover:text-accent transition-colors"
                   >
-                    {link.name}
-                  </motion.a>
+                    <motion.span
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      className="text-xl font-serif text-foreground hover:text-accent transition-colors block"
+                    >
+                      {link.name}
+                    </motion.span>
+                  </Link>
                 ))}
               </div>
 
               <div className="mt-12 flex gap-4">
-                <button className="p-3 glass-card text-foreground">
+                <Link to="/account" onClick={() => setIsMobileMenuOpen(false)} className="p-3 glass-card text-foreground">
                   <User className="w-5 h-5" />
-                </button>
-                <button className="p-3 glass-card text-foreground">
+                </Link>
+                <Link to="/wishlist" onClick={() => setIsMobileMenuOpen(false)} className="p-3 glass-card text-foreground">
                   <Heart className="w-5 h-5" />
-                </button>
+                </Link>
               </div>
             </motion.div>
           </>
