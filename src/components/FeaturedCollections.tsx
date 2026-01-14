@@ -134,9 +134,7 @@ const CollectionCard = ({
         transition={{ duration: 0.8, delay: index * 0.15 }}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className={`relative group cursor-pointer overflow-hidden rounded-3xl ${
-          index === 0 ? 'md:col-span-2 md:row-span-2 min-h-[500px]' : 'min-h-[250px]'
-        }`}
+        className="relative group cursor-pointer overflow-hidden rounded-3xl h-[350px] md:h-[400px]"
       >
         <div className="absolute inset-0 overflow-hidden">
           <AnimatePresence mode="wait">
@@ -248,7 +246,7 @@ const FeaturedCollections = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           {collections.map((collection, index) => (
             <CollectionCard
               key={collection.title}
