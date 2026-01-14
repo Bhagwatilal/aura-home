@@ -4,6 +4,7 @@ export interface Product {
   price: number;
   originalPrice?: number;
   image: string;
+  images?: string[];
   category: string;
   subcategory: string;
   isNew?: boolean;
@@ -85,6 +86,11 @@ export const products: Product[] = [
     price: 2499,
     originalPrice: 2999,
     image: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=500',
+    images: [
+      'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=500',
+      'https://images.unsplash.com/photo-1549887534-1541e9326642?w=500',
+      'https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?w=500',
+    ],
     category: 'Wall Decor',
     subcategory: 'Wall Art',
     isSale: true,
@@ -96,6 +102,11 @@ export const products: Product[] = [
     name: 'Vintage Gold Mirror',
     price: 4999,
     image: 'https://images.unsplash.com/photo-1618220179428-22790b461013?w=500',
+    images: [
+      'https://images.unsplash.com/photo-1618220179428-22790b461013?w=500',
+      'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=500',
+      'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=500',
+    ],
     category: 'Wall Decor',
     subcategory: 'Decorative Mirrors',
     isNew: true,
@@ -107,6 +118,11 @@ export const products: Product[] = [
     name: 'Macrame Wall Hanging',
     price: 1299,
     image: 'https://images.unsplash.com/photo-1622290291468-a28f7a7dc6a8?w=500',
+    images: [
+      'https://images.unsplash.com/photo-1622290291468-a28f7a7dc6a8?w=500',
+      'https://images.unsplash.com/photo-1609709295948-17d77cb2a69b?w=500',
+      'https://images.unsplash.com/photo-1615529182904-14819c35db37?w=500',
+    ],
     category: 'Wall Decor',
     subcategory: 'Tapestries',
     rating: 4.7,
@@ -117,6 +133,11 @@ export const products: Product[] = [
     name: 'Floating Shelf Set',
     price: 1899,
     image: 'https://images.unsplash.com/photo-1597072689227-8882273e8f6a?w=500',
+    images: [
+      'https://images.unsplash.com/photo-1597072689227-8882273e8f6a?w=500',
+      'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=500',
+      'https://images.unsplash.com/photo-1595428774223-ef52624120d2?w=500',
+    ],
     category: 'Wall Decor',
     subcategory: 'Floating Shelves',
     rating: 4.6,
@@ -129,6 +150,11 @@ export const products: Product[] = [
     name: 'Monstera in Ceramic Pot',
     price: 1799,
     image: 'https://images.unsplash.com/photo-1614594975525-e45c8f8e6ac4?w=500',
+    images: [
+      'https://images.unsplash.com/photo-1614594975525-e45c8f8e6ac4?w=500',
+      'https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=500',
+      'https://images.unsplash.com/photo-1463320726281-696a485928c7?w=500',
+    ],
     category: 'Plants & Greenery',
     subcategory: 'Potted Plants',
     isNew: true,
@@ -141,6 +167,11 @@ export const products: Product[] = [
     price: 3499,
     originalPrice: 3999,
     image: 'https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=500',
+    images: [
+      'https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=500',
+      'https://images.unsplash.com/photo-1545241047-6083a3684587?w=500',
+      'https://images.unsplash.com/photo-1501004318641-b39e6451bec6?w=500',
+    ],
     category: 'Plants & Greenery',
     subcategory: 'Faux Plants',
     isSale: true,
@@ -152,6 +183,11 @@ export const products: Product[] = [
     name: 'Geometric Terrarium',
     price: 999,
     image: 'https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=500',
+    images: [
+      'https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=500',
+      'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=500',
+      'https://images.unsplash.com/photo-1509423350716-97f9360b4e09?w=500',
+    ],
     category: 'Plants & Greenery',
     subcategory: 'Terrariums',
     rating: 4.8,
@@ -162,6 +198,11 @@ export const products: Product[] = [
     name: 'Hanging Macrame Planter',
     price: 799,
     image: 'https://images.unsplash.com/photo-1520412099551-62b6bafeb5bb?w=500',
+    images: [
+      'https://images.unsplash.com/photo-1520412099551-62b6bafeb5bb?w=500',
+      'https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=500',
+      'https://images.unsplash.com/photo-1545241047-6083a3684587?w=500',
+    ],
     category: 'Plants & Greenery',
     subcategory: 'Hanging Planters',
     rating: 4.6,
