@@ -238,14 +238,7 @@ const ProductDetail = () => {
               {relatedProducts.map((relatedProduct) => (
                 <ProductCard
                   key={relatedProduct.id}
-                  id={relatedProduct.id}
-                  name={relatedProduct.name}
-                  price={relatedProduct.price}
-                  originalPrice={relatedProduct.originalPrice}
-                  image={relatedProduct.image}
-                  category={relatedProduct.category}
-                  isNew={relatedProduct.isNew}
-                  isSale={relatedProduct.isSale}
+                  product={relatedProduct}
                 />
               ))}
             </div>

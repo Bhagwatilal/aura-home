@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Heart, ShoppingBag } from 'lucide-react';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Product } from '@/data/products';
 import { useCart } from '@/context/CartContext';
 import { useWishlist } from '@/context/WishlistContext';
@@ -34,16 +35,17 @@ const ProductCard = (props: ProductCardProps) => {
   const isWishlisted = isInWishlist(productId);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-50px' }}
-      transition={{ duration: 0.6 }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className="group cursor-pointer"
-    >
-      {/* Image Container */}
+    <Link to={`/product/${productId}`}>
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-50px' }}
+        transition={{ duration: 0.6 }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className="group cursor-pointer"
+      >
+        {/* Image Container */}
       <div className="relative aspect-[3/4] rounded-2xl overflow-hidden mb-4 bg-secondary">
         <motion.img
           src={image}
@@ -128,6 +130,7 @@ const ProductCard = (props: ProductCardProps) => {
         </div>
       </div>
     </motion.div>
+    </Link>
   );
 };
 
