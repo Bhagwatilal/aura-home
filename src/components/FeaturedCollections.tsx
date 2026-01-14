@@ -135,10 +135,10 @@ const CollectionCard = ({
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         className={`relative group cursor-pointer overflow-hidden rounded-3xl ${
-          index === 0 ? 'md:col-span-2 md:row-span-2' : ''
+          index === 0 ? 'md:col-span-2 md:row-span-2 min-h-[500px]' : 'min-h-[250px]'
         }`}
       >
-        <div className="aspect-square md:aspect-auto md:h-full relative overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden">
           <AnimatePresence mode="wait">
             <motion.img
               key={currentImageIndex}
