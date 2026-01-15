@@ -1,3 +1,5 @@
+import productMonstera from '@/assets/product-monstera.jpg';
+
 export interface Product {
   id: string;
   name: string;
@@ -149,9 +151,9 @@ export const products: Product[] = [
     id: 'pg-001',
     name: 'Monstera in Ceramic Pot',
     price: 1799,
-    image: 'https://images.unsplash.com/photo-1614594975525-e45c8f8e6ac4?w=500',
+    image: productMonstera,
     images: [
-      'https://images.unsplash.com/photo-1614594975525-e45c8f8e6ac4?w=500',
+      productMonstera,
       'https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=500',
       'https://images.unsplash.com/photo-1463320726281-696a485928c7?w=500',
     ],
