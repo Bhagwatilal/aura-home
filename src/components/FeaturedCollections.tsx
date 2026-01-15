@@ -7,6 +7,13 @@ import categoryWallDecor from '@/assets/category-wall-decor.jpg';
 import categoryPlants from '@/assets/category-plants.jpg';
 import categoryLighting from '@/assets/category-lighting.jpg';
 import categoryDecorAccents from '@/assets/category-decor-accents.jpg';
+import collectionFurniture from '@/assets/collection-furniture.jpg';
+import collectionFurniture2 from '@/assets/collection-furniture-2.jpg';
+import collectionTextiles from '@/assets/collection-textiles.jpg';
+import collectionTextiles2 from '@/assets/collection-textiles-2.jpg';
+import collectionVases from '@/assets/collection-vases.jpg';
+import collectionVases2 from '@/assets/collection-vases-2.jpg';
+import collectionLighting2 from '@/assets/collection-lighting-2.jpg';
 
 const collections = [
   {
@@ -22,6 +29,17 @@ const collections = [
     slug: 'wall-decor',
   },
   {
+    title: 'Furniture',
+    description: 'Modern & classic pieces',
+    images: [
+      collectionFurniture,
+      collectionFurniture2,
+      'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800',
+    ],
+    items: 65,
+    slug: 'furniture',
+  },
+  {
     title: 'Plants & Greenery',
     description: 'Bring nature indoors',
     images: [
@@ -34,29 +52,49 @@ const collections = [
     slug: 'plants-greenery',
   },
   {
+    title: 'Textiles',
+    description: 'Soft comfort for every space',
+    images: [
+      collectionTextiles,
+      collectionTextiles2,
+      'https://images.unsplash.com/photo-1567016432779-094069958ea5?w=800',
+    ],
+    items: 42,
+    slug: 'textiles',
+  },
+  {
     title: 'Lighting & Ambience',
     description: 'Illuminate with elegance',
     images: [
       categoryLighting,
+      collectionLighting2,
       'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=800',
       'https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=800',
-      'https://images.unsplash.com/photo-1519710164239-da123dc03ef4?w=800',
     ],
     items: 42,
     slug: 'lighting-ambience',
   },
   {
-    title: 'Decor Accents',
-    description: 'Finishing touches for every room',
+    title: 'Vases & Ceramics',
+    description: 'Artisan pottery collection',
     images: [
-      categoryDecorAccents,
-      'https://images.unsplash.com/photo-1581783898377-1c85bf937427?w=800',
-      'https://images.unsplash.com/photo-1602523961358-f9f03a97d2e7?w=800',
-      'https://images.unsplash.com/photo-1544531586-fde5298cdd40?w=800',
+      collectionVases,
+      collectionVases2,
+      'https://images.unsplash.com/photo-1612198188060-c7c2a3b66eae?w=800',
     ],
-    items: 54,
+    items: 38,
     slug: 'decor-accents',
   },
+];
+
+// Bento grid positions - matching the reference image layout
+const gridPositions = [
+  'md:col-span-1 md:row-span-2', // Tall left
+  'md:col-span-1 md:row-span-1', // Top middle
+  'md:col-span-1 md:row-span-2', // Tall right
+  'md:col-span-1 md:row-span-1', // Bottom middle-left
+  'md:col-span-1 md:row-span-1', // Bottom middle-right
+  'md:col-span-1 md:row-span-1', // Bottom right (small)
 ];
 
 interface CollectionType {
@@ -70,15 +108,19 @@ interface CollectionType {
 const CollectionCard = ({
   collection,
   index,
+  gridClass,
 }: {
   collection: CollectionType;
   index: number;
+  gridClass: string;
 }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [isHovered, setIsHovered] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  const isTall = gridClass.includes('row-span-2');
 
   const startAutoScroll = useCallback(() => {
     if (collection.images.length <= 1) return;
@@ -126,15 +168,17 @@ const CollectionCard = ({
   };
 
   return (
-    <Link to={`/category/${collection.slug}`}>
+    <Link to={`/category/${collection.slug}`} className={gridClass}>
       <motion.div
         ref={ref}
         initial={{ opacity: 0, y: 60 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.8, delay: index * 0.15 }}
+        transition={{ duration: 0.8, delay: index * 0.1 }}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className="relative group cursor-pointer overflow-hidden rounded-3xl h-[350px] md:h-[400px]"
+        className={`relative group cursor-pointer overflow-hidden rounded-3xl h-full ${
+          isTall ? 'min-h-[450px] md:min-h-[500px]' : 'min-h-[220px] md:min-h-[240px]'
+        }`}
       >
         <div className="absolute inset-0 overflow-hidden">
           <AnimatePresence mode="wait">
@@ -143,8 +187,8 @@ const CollectionCard = ({
               src={collection.images[currentImageIndex]}
               alt={collection.title}
               className="w-full h-full object-cover absolute inset-0"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+              initial={{ opacity: 0, scale: 1.05 }}
+              animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.4 }}
             />
@@ -158,60 +202,65 @@ const CollectionCard = ({
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 onClick={goToPrevious}
-                className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-background/80 backdrop-blur-sm rounded-full hover:bg-background transition-colors z-10"
+                className="absolute left-3 top-1/2 -translate-y-1/2 p-1.5 bg-background/80 backdrop-blur-sm rounded-full hover:bg-background transition-colors z-10"
               >
-                <ChevronLeft className="w-5 h-5 text-foreground" />
+                <ChevronLeft className="w-4 h-4 text-foreground" />
               </motion.button>
               <motion.button
                 initial={{ opacity: 0, x: 10 }}
                 animate={{ opacity: 1, x: 0 }}
                 onClick={goToNext}
-                className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-background/80 backdrop-blur-sm rounded-full hover:bg-background transition-colors z-10"
+                className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 bg-background/80 backdrop-blur-sm rounded-full hover:bg-background transition-colors z-10"
               >
-                <ChevronRight className="w-5 h-5 text-foreground" />
+                <ChevronRight className="w-4 h-4 text-foreground" />
               </motion.button>
             </>
           )}
-
-          {/* Dots Indicator */}
-          {collection.images.length > 1 && (
-            <div className="absolute bottom-20 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-              {collection.images.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={(e) => goToIndex(e, idx)}
-                  className={`w-2.5 h-2.5 rounded-full transition-all ${
-                    idx === currentImageIndex
-                      ? 'bg-primary-foreground w-5'
-                      : 'bg-primary-foreground/50 hover:bg-primary-foreground/70'
-                  }`}
-                />
-              ))}
-            </div>
-          )}
         </div>
 
-        <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end">
+        <div className={`absolute inset-0 p-5 md:p-6 flex flex-col justify-end`}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
-            <p className="text-primary-foreground/70 text-sm font-medium mb-2">
+            <p className="text-primary-foreground/70 text-xs font-medium mb-1">
               {collection.items} Items
             </p>
-            <h3 className="font-serif text-2xl md:text-3xl text-primary-foreground mb-2">
+            <h3 className={`font-serif text-primary-foreground mb-1 ${
+              isTall ? 'text-xl md:text-2xl' : 'text-lg md:text-xl'
+            }`}>
               {collection.title}
             </h3>
-            <p className="text-primary-foreground/80 text-sm mb-4">
+            <p className={`text-primary-foreground/80 mb-3 ${
+              isTall ? 'text-sm' : 'text-xs'
+            }`}>
               {collection.description}
             </p>
+
+            {/* Dots Indicator - Now between description and button */}
+            {collection.images.length > 1 && (
+              <div className="flex gap-1.5 mb-3">
+                {collection.images.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={(e) => goToIndex(e, idx)}
+                    className={`h-1.5 rounded-full transition-all ${
+                      idx === currentImageIndex
+                        ? 'bg-primary-foreground w-4'
+                        : 'bg-primary-foreground/50 hover:bg-primary-foreground/70 w-1.5'
+                    }`}
+                  />
+                ))}
+              </div>
+            )}
+
             <motion.span
               whileHover={{ x: 5 }}
-              className="inline-flex items-center gap-2 text-primary-foreground font-medium text-sm group/btn"
+              className="inline-flex items-center gap-1.5 text-primary-foreground font-medium text-xs group/btn"
             >
               Explore
-              <ArrowUpRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+              <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
             </motion.span>
           </motion.div>
         </div>
@@ -246,12 +295,14 @@ const FeaturedCollections = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+        {/* Bento Grid Layout */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-5 auto-rows-auto md:grid-rows-[repeat(2,_minmax(240px,_auto))]">
           {collections.map((collection, index) => (
             <CollectionCard
               key={collection.title}
               collection={collection}
               index={index}
+              gridClass={gridPositions[index] || ''}
             />
           ))}
         </div>
