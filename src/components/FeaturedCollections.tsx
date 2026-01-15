@@ -1,4 +1,4 @@
-import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { motion, useInView, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { useRef, useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -85,16 +85,28 @@ const collections = [
     items: 38,
     slug: 'decor-accents',
   },
+  {
+    title: 'Decor Accents',
+    description: 'Finishing touches for every room',
+    images: [
+      categoryDecorAccents,
+      'https://images.unsplash.com/photo-1581783898377-1c85bf937427?w=800',
+      'https://images.unsplash.com/photo-1602523961358-f9f03a97d2e7?w=800',
+    ],
+    items: 54,
+    slug: 'decor-accents',
+  },
 ];
 
-// Bento grid positions - matching the reference image layout
+// Bento grid positions - 7 cards layout
 const gridPositions = [
   'md:col-span-1 md:row-span-2', // Tall left
   'md:col-span-1 md:row-span-1', // Top middle
   'md:col-span-1 md:row-span-2', // Tall right
-  'md:col-span-1 md:row-span-1', // Bottom middle-left
-  'md:col-span-1 md:row-span-1', // Bottom middle-right
-  'md:col-span-1 md:row-span-1', // Bottom right (small)
+  'md:col-span-1 md:row-span-1', // Middle row - left
+  'md:col-span-1 md:row-span-1', // Middle row - center
+  'md:col-span-1 md:row-span-1', // Bottom row - left
+  'md:col-span-1 md:row-span-1', // Bottom row - right (new 7th card)
 ];
 
 interface CollectionType {
@@ -119,6 +131,13 @@ const CollectionCard = ({
   const [isHovered, setIsHovered] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Parallax effect for each card
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start end', 'end start'],
+  });
+  const parallaxY = useTransform(scrollYProgress, [0, 1], [30, -30]);
 
   const isTall = gridClass.includes('row-span-2');
 
@@ -182,16 +201,21 @@ const CollectionCard = ({
       >
         <div className="absolute inset-0 overflow-hidden">
           <AnimatePresence mode="wait">
-            <motion.img
+            <motion.div
               key={currentImageIndex}
-              src={collection.images[currentImageIndex]}
-              alt={collection.title}
-              className="w-full h-full object-cover absolute inset-0"
-              initial={{ opacity: 0, scale: 1.05 }}
+              style={{ y: parallaxY }}
+              className="absolute inset-[-30px]"
+              initial={{ opacity: 0, scale: 1.1 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.4 }}
-            />
+            >
+              <img
+                src={collection.images[currentImageIndex]}
+                alt={collection.title}
+                className="w-full h-full object-cover"
+              />
+            </motion.div>
           </AnimatePresence>
           <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent" />
 
@@ -271,13 +295,22 @@ const CollectionCard = ({
 
 const FeaturedCollections = () => {
   const headerRef = useRef(null);
+  const sectionRef = useRef(null);
   const isHeaderInView = useInView(headerRef, { once: true });
 
+  // Parallax for section header
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  });
+  const headerY = useTransform(scrollYProgress, [0, 1], [50, -50]);
+
   return (
-    <section id="collections" className="section-padding bg-background">
+    <section ref={sectionRef} id="collections" className="section-padding bg-background overflow-hidden">
       <div className="container-luxury">
         <motion.div
           ref={headerRef}
+          style={{ y: headerY }}
           initial={{ opacity: 0, y: 40 }}
           animate={isHeaderInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
@@ -295,8 +328,8 @@ const FeaturedCollections = () => {
           </p>
         </motion.div>
 
-        {/* Bento Grid Layout */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-5 auto-rows-auto md:grid-rows-[repeat(2,_minmax(240px,_auto))]">
+        {/* Bento Grid Layout - 7 cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-5 auto-rows-auto md:grid-rows-[repeat(3,_minmax(240px,_auto))]">
           {collections.map((collection, index) => (
             <CollectionCard
               key={collection.title}
